@@ -55,6 +55,9 @@ final as (
         customer_orders.most_recent_order,
         customer_orders.number_of_orders,
         customer_payments.total_amount as customer_lifetime_value
+        , date_diff('day', customer_orders.most_recent_order, now()) as days_since_most_recent_order
+        , case when customer_orders.number_of_orders>1 then true else false end as is_repeat_customer 
+        , customer_payments.total_amount/customer_orders.number_of_orders as average_order_value
 
     from customers
 
