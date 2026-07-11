@@ -82,3 +82,20 @@ models:
         description: Amount of the order (AUD) paid for by gift card
         tests:
           - not_null
+
+  - name: monthly_revenue
+    description: Total revenue per month
+
+    columns:
+      - name: order_month
+        description: Month
+        tests:
+          - not_null
+          
+      - name: total_revenue
+        description: Total revenue for that month
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">=0"
